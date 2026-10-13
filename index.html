@@ -1061,7 +1061,7 @@ dialog.lb button{position:absolute;top:-14px;right:-14px;width:42px;height:42px;
         <div id="faqList"></div>
         <div class="faq-empty" id="faqEmpty" hidden>No questions match that. <a class="tlink" href="#contact">Ask me directly</a> instead.</div>
       </div>
-      <aside class="ask"><h3>Didn't find your answer?</h3><p>Send me your question and I'll reply within <span class="ph" style="color:var(--amber-hi);border-color:var(--amber-hi)">48 hours</span>.</p><a class="btn amber" href="#contact">Ask me <span class="ar">→</span></a></aside>
+      <aside class="ask"><h3>Didn't find your answer?</h3><p>Send me your question and I'll reply within <span class="ph" style="color:var(--amber-hi);border-color:var(--amber-hi)">24 hours</span>.</p><a class="btn amber" href="#contact">Ask me <span class="ar">→</span></a></aside>
     </div>
   </section>
 </div>
@@ -1393,9 +1393,8 @@ const FAQ=[
  ['hiring','Do you have a CV I can download?','Yes. <a class="tlink" href="https://drive.google.com/file/d/13bX0XUNA6vyqBl_4-2lbzIy8fMo9tW6k/view?usp=sharing" target="_blank" rel="noopener">Download my CV here</a>, or use the button on the Hire me page.'],
  ['working','What services do you offer?','Data cleaning and modelling, analysis and KPI design, dashboards in Power BI, Tableau, Looker or Data Studio, simple predictive models, ELT pipelines and data layers in dbt and BigQuery, data-quality monitoring, report automation, A/B test analysis and simple predictive models.'],
  ['working','How does a project work?','A short discovery call about the decision the report should support. Then I audit and model the data, share a first draft, build it out with your feedback, check every number against the source, and hand over with a short guide.'],
- ['working','How long does a project usually take?','A focused one-page dashboard usually takes <span class="ph">1–2 weeks</span>. A multi-page report with a new data model takes <span class="ph">3–4 weeks</span>. I\'ll give you a timeline after our first call.'],
+ ['working','How long does a project usually take?','It depends on what you need. We\'ll agree the scope and a timeline together on our first call, based on your data, your deadline and how many pages or pipelines are involved.'],
  ['working','What do I need to provide?','Access to the data (exports, a database connection or a sample), the questions you want answered, and one person who can explain how the business works.'],
- ['working','Do you offer revisions and support?','Yes. Every project includes <span class="ph">two rounds</span> of revisions, and I\'m available for <span class="ph">30 days</span> after handover for fixes and questions.'],
  ['working','Do you work with clients outside Nigeria?','Yes. I work remotely and collaborate over video calls, email and shared workspaces.'],
  ['tech','Can you work with our existing data and tools?','Usually, yes. I\'ve worked with Snowflake, BigQuery, Oracle, SAP, PostgreSQL, APIs, Dataverse, and CSV and Excel files. If you use something else, I\'ll tell you upfront what it would take.'],
  ['tech','How do you make sure the numbers are right?','I reconcile every key total against the source system before anything is published, and I document how each measure is calculated so anyone can check it.'],
@@ -1423,7 +1422,7 @@ const STEPS=[
  ['Model','Shape it so it answers questions','I build a clean star schema in SQL or Power Query, with one source of truth for each metric.','A documented data model and measure definitions.','"Is there exactly one way to calculate this number?"'],
  ['Build','Design for the person reading it','Each page answers one question, reading from KPI to trend to breakdown to the reason behind it.','A working draft you can click through within days.','"Can someone understand this page in ten seconds?"'],
  ['Validate','Prove the numbers are right','I reconcile key figures against the source and test edge cases with the people who know the business.','A sign-off checklist with every check I ran.','"Would I defend this number in a board meeting?"'],
- ['Hand over','Make it run without me','Scheduled refreshes, a short user guide and a walkthrough, so your team owns it.','The report, the guide and a support window.','"What happens next month when I\'m not here?"']
+ ['Hand over','Make it run without me','Scheduled refreshes, a short user guide and a walkthrough, so your team owns it.','The report and a short user guide.','"What happens next month when I\'m not here?"']
 ];
 $('#psteps').innerHTML=STEPS.map((s,i)=>`<button class="pstep" role="tab" aria-selected="${i===0}" data-i="${i}"><span class="k">0${i+1}</span><span><b>${s[0]}</b><small>${s[1]}</small></span><span class="ar">→</span></button>`).join('');
 function showStep(i){const s=STEPS[i];$$('.pstep').forEach((b,j)=>b.setAttribute('aria-selected',j===i));
@@ -1443,7 +1442,7 @@ async function sendForm(f,data,msgEl,name){
  const btn=f.querySelector('[type=submit]');btn.disabled=true;msgEl.hidden=false;msgEl.style.color='';msgEl.textContent='Sending…';
  try{const body=new URLSearchParams({'form-name':'contact',...data}).toString();
   const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
-  if(!r.ok)throw 0;msgEl.textContent=`Thanks${name?', '+name:''} 👋 Your message is on its way. I'll reply within 48 hours.`;f.reset()}
+  if(!r.ok)throw 0;msgEl.textContent=`Thanks${name?', '+name:''} 👋 Your message is on its way. I'll reply within 24 hours.`;f.reset()}
  catch(e){msgEl.style.color='var(--bad)';msgEl.textContent='Sorry, that didn\'t send. Please email me at ample.oluwaferanmi26@gmail.com instead.'}
  btn.disabled=false}
 $('#form').addEventListener('submit',e=>{e.preventDefault();const f=e.target;const topic=($$('#pick button').find(b=>b.getAttribute('aria-pressed')==='true')||{}).textContent||'';sendForm(f,{name:$('#fName').value,email:$('#fEmail').value,topic,message:$('#fMsg').value,page:'Contact'},$('#formMsg'),$('#fName').value.trim())});
@@ -1497,9 +1496,9 @@ $('#probs').innerHTML=PROBS.map((p,i)=>`<button type="button" aria-pressed="${i=
 function plan(){const sel=$$('#probs button').filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>PROBS.find(p=>p.id===b.dataset.id));
  const el=$('#plan');
  if(!sel.length){el.innerHTML='<div class="top"><h3>Your plan will appear here</h3></div><p style="color:#C9D5EA">Pick at least one problem on the left.</p>';return}
- const steps=[['Discovery call','Agree the decisions this work should support and how we\'ll measure success.','30–45 minutes'],...sel.map(p=>p.s),['Validate and hand over','Reconcile every number, then hand over with a guide and a support window.','Checklist · user guide']];
+ const steps=[['Discovery call','Agree the decisions this work should support and how we\'ll measure success.','30–45 minutes'],...sel.map(p=>p.s),['Validate and hand over','Reconcile every number, then hand over with a short guide.','Checklist · user guide']];
  const wk=1+sel.reduce((a,p)=>a+p.w,0);
- el.innerHTML=`<div class="top"><h3>How I'd solve this</h3><span class="dur">≈ ${wk}–${wk+1} weeks*</span></div><ol>${steps.map((s,i)=>`<li style="animation-delay:${i*60}ms"><div><b>${s[0]}</b><small>${s[1]}</small><span class="tools-mini">${s[2]}</span></div></li>`).join('')}</ol><p class="note">* Rough estimate for illustration. Confirm your own typical timelines.</p><a class="btn amber sm" href="#contact" style="justify-self:start">Send me this plan <span class="ar">→</span></a>`}
+ el.innerHTML=`<div class="top"><h3>How I'd solve this</h3><span class="dur">Timeline agreed on our first call</span></div><ol>${steps.map((s,i)=>`<li style="animation-delay:${i*60}ms"><div><b>${s[0]}</b><small>${s[1]}</small><span class="tools-mini">${s[2]}</span></div></li>`).join('')}</ol><a class="btn amber sm" href="#contact" style="justify-self:start">Send me this plan <span class="ar">→</span></a>`}
 $$('#probs button').forEach(b=>b.addEventListener('click',()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');plan()}));
 plan();
 
@@ -1534,7 +1533,7 @@ $$('[data-lwt]').forEach(slot=>{const k=slot.dataset.lwt;
  slot.outerHTML=`<section class="lwt" style="padding-top:0"><div class="wrap"><div class="lwt-in">
   <div><h2 class="cond"><span class="dotmark" aria-hidden="true"></span><span data-scramble>Let's work together</span></h2>
    <p class="lede">Whether you need a Power BI dashboard, a clean data model, a pipeline, or you have a role to fill, I'd love to hear about it. Say hi <button class="wave" aria-label="Wave hello" style="font-size:1.2em">👋</button></p>
-   <div class="meta"><div><span class="k">Email</span><span class="lwt-mail" style="overflow-wrap:anywhere">ample.oluwaferanmi26@gmail.com</span><button type="button" class="lwt-copy">Copy</button></div><div><span class="k">CV</span><a href="https://drive.google.com/file/d/13bX0XUNA6vyqBl_4-2lbzIy8fMo9tW6k/view?usp=sharing" target="_blank" rel="noopener" style="color:inherit">Download my CV ↗</a></div><div><span class="k">Reply time</span>Within <span class="ph">48 hours</span></div><div><span class="k">Open to</span>DE · BI · Analytics roles · remote, hybrid or relocation</div></div></div>
+   <div class="meta"><div><span class="k">Email</span><span class="lwt-mail" style="overflow-wrap:anywhere">ample.oluwaferanmi26@gmail.com</span><button type="button" class="lwt-copy">Copy</button></div><div><span class="k">CV</span><a href="https://drive.google.com/file/d/13bX0XUNA6vyqBl_4-2lbzIy8fMo9tW6k/view?usp=sharing" target="_blank" rel="noopener" style="color:inherit">Download my CV ↗</a></div><div><span class="k">Reply time</span>Within <span class="ph">24 hours</span></div><div><span class="k">Open to</span>DE · BI · Analytics roles · remote, hybrid or relocation</div></div></div>
   <form class="lwt-form" novalidate>
    <div class="two"><label for="${k}-n">Name<input id="${k}-n" name="name" required placeholder="John Smith" autocomplete="name"></label><label for="${k}-e">Email<input id="${k}-e" name="email" type="email" required placeholder="johnsmith@gmail.com" autocomplete="email"></label></div>
    <label for="${k}-s">Service needed?<select id="${k}-s" name="topic"><option value="">Select…</option><option>Full-time or contract role</option><option>Power BI dashboard</option><option>Data cleaning &amp; modelling</option><option>Data analysis &amp; insights</option><option>Predictive model</option><option>Data pipeline</option><option>Something else</option></select></label>
