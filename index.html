@@ -1388,7 +1388,7 @@ $('#lane1').innerHTML=l1+l1;
 /* ---------- live client feedback from Google Sheets ----------
    Paste the sheet's "Publish to web → CSV" link below. Only rows whose
    "Approved" column says Yes / TRUE are shown. Leave empty to keep the quotes above. */
-const FEEDBACK_CSV='';
+const FEEDBACK_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSxRSBcn25kl8395q70NY1G63Y40InxZW27Vd1ERfM-Ps1w7KYWb_jtinuWC-NM6grgEXrxfjaJDdO6/pub?gid=549134487&single=true&output=csv';
 function parseCSV(t){const rows=[];let r=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];
  if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
  else if(c==='"')q=true;else if(c===','){r.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;r.push(f);rows.push(r);r=[];f=''}else f+=c}
