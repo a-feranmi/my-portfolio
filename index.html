@@ -932,7 +932,7 @@ dialog.lb button{position:absolute;top:-14px;right:-14px;width:42px;height:42px;
 
   <section style="padding-top:0">
     <div class="wrap">
-      <div class="sec-head"><div class="row"><div style="display:grid;gap:14px"><div class="eyebrow">What clients say</div><h2>Feedback, flowing in</h2></div><span class="sample-tag">Sample feedback · replace with real quotes</span></div></div>
+      <div class="sec-head"><div class="row"><div style="display:grid;gap:14px"><div class="eyebrow">What clients say</div><h2>Feedback, flowing in</h2></div></div></div>
     </div>
     <div class="flowing" id="flowing"><div class="lane" id="lane1"></div></div>
   </section>
@@ -1150,7 +1150,7 @@ dialog.lb button{position:absolute;top:-14px;right:-14px;width:42px;height:42px;
   <div class="wrap">
     <div><a class="logo" href="#home"><span class="mark"><svg viewBox="0 0 64 64" width="36" height="36" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#15325E"/><path class="wv" d="M14 44 L26 34 L35 39 L48 22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle class="pt" cx="48" cy="22" r="6" fill="#F2B53A"/></svg></span><span>Feranmi Amole<span class="dot">.</span></span></a><p class="small">Data Analyst · BI Developer · Analytics Engineer.</p><p class="small">© 2026 Oluwaferanmi Amole</p></div>
     <div><h4>Pages</h4><nav><a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="#hire">Hire me</a></nav></div>
-    <div><h4>Elsewhere</h4><nav><a href="https://www.linkedin.com/in/oluwaferanmi-amole/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/a-feranmi" target="_blank" rel="noopener">GitHub ↗</a><a href="https://wa.me/2348141270590" target="_blank" rel="noopener">WhatsApp / call ↗</a><a href="https://bredgepulse.streamlit.app/" target="_blank" rel="noopener">BredgePulse app ↗</a></nav></div>
+    <div><h4>Elsewhere</h4><nav><a href="https://www.linkedin.com/in/oluwaferanmi-amole/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/a-feranmi" target="_blank" rel="noopener">GitHub ↗</a><a href="https://wa.me/2348141270590" target="_blank" rel="noopener">WhatsApp / call ↗</a></nav></div>
   </div>
 </footer>
 <button class="top-btn" id="topBtn" data-hide="true" aria-label="Back to top">↑</button>
@@ -1384,6 +1384,29 @@ const TEST=[
 const card=([q,n,r])=>`<figure class="tcard" style="margin:0"><span class="stars" aria-label="5 stars">★★★★★</span><p>"${q}"</p><figcaption class="who"><span class="av">${n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</span><div><b class="ph">${n}</b><small class="ph">${r}</small></div></figcaption></figure>`;
 const l1=TEST.slice(0,3).concat(TEST.slice(3)).map(card).join(''),l2=TEST.slice(3).concat(TEST.slice(0,3)).map(card).join('');
 $('#lane1').innerHTML=l1+l1;
+
+/* ---------- live client feedback from Google Sheets ----------
+   Paste the sheet's "Publish to web → CSV" link below. Only rows whose
+   "Approved" column says Yes / TRUE are shown. Leave empty to keep the quotes above. */
+const FEEDBACK_CSV='';
+function parseCSV(t){const rows=[];let r=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];
+ if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+ else if(c==='"')q=true;else if(c===','){r.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;r.push(f);rows.push(r);r=[];f=''}else f+=c}
+ if(f||r.length){r.push(f);rows.push(r)}return rows}
+const escH=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function loadFeedback(){if(!FEEDBACK_CSV)return;
+ try{const res=await fetch(FEEDBACK_CSV,{cache:'no-store'});if(!res.ok)return;const rows=parseCSV(await res.text());if(rows.length<2)return;
+  const h=rows[0].map(x=>x.toLowerCase());const col=re=>h.findIndex(x=>re.test(x));
+  const iN=col(/name/),iR=col(/role|title|position/),iC=col(/company|organi/),iQ=col(/feedback|quote|testimonial|say/),iA=col(/approv/),iS=col(/rating|star/);
+  const ok=rows.slice(1).filter(r=>iA>=0&&/^(yes|true|y|1|✓|approved)$/i.test((r[iA]||'').trim())&&(r[iQ]||'').trim());
+  if(!ok.length)return;
+  const live=ok.reverse().map(r=>{const n=(r[iN]||'').trim()||'Client',role=[(r[iR]||'').trim(),(r[iC]||'').trim()].filter(Boolean).join(', ');
+   const st=Math.max(1,Math.min(5,parseInt(r[iS])||5));
+   return `<figure class="tcard" style="margin:0"><span class="stars" aria-label="${st} stars">${'★'.repeat(st)}${'☆'.repeat(5-st)}</span><p>"${escH(r[iQ].trim())}"</p><figcaption class="who"><span class="av">${escH(n.split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase())}</span><div><b>${escH(n)}</b><small>${escH(role)}</small></div></figcaption></figure>`});
+  let cards=live;while(cards.length<4)cards=cards.concat(live);
+  $('#lane1').innerHTML=cards.join('')+cards.join('')}
+ catch(e){}}
+loadFeedback();
 
 /* ---------- FAQ ---------- */
 const FAQ=[
