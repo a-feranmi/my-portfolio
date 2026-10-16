@@ -2,7 +2,7 @@
 
 **Live site:** [theferanmiamole.netlify.app](https://theferanmiamole.netlify.app)
 
-The personal portfolio of **Oluwaferanmi (Feranmi) Amole**, a Data Analyst, BI Developer and Analytics Engineer based in Lagos, Nigeria, working with teams across time zones.
+The personal portfolio of **Oluwaferanmi (Feranmi) Amole**, a Data Analyst and BI Developer, and a Data Engineer in training, based in Lagos, Nigeria, working with teams across time zones.
 
 I build the dashboards teams make decisions from, and the data layers underneath them: semantic models, warehouse tables and tested pipelines. This site brings that work together in one place: who I am, what I've built, and how to work with me.
 
