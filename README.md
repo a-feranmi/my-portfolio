@@ -16,13 +16,13 @@ I build the dashboards teams make decisions from, and the data layers underneath
 | **About** | My story, work experience, a "CV as a dashboard" report, the tools I use and what I use each one for, and how I deliver a project |
 | **Projects** | Every project with the problem, the data, what I built and what it found, including results that didn't go to plan |
 | **FAQ** | Answers for recruiters, hiring managers and clients, searchable by topic |
-| **Contact** | Email, LinkedIn, GitHub and WhatsApp, plus a message form |
+| **Contact** | Email, LinkedIn and GitHub, plus a message form |
 | **Hire me** | An interactive SQL console where you can query a small "database about me" |
 
 ## Featured work
 
 - **E-Commerce Retail Sales Analysis:** a 3-page Power BI report (ZoomCharts challenge) that found loyal customers drive 84.6% of revenue
-- **BredgePulse:** an ML web app that flags at-risk client engagements early
+- **NexusPulse:** an early-warning ML platform (Streamlit + Power BI) that flags at-risk client placements with 0.892 recall
 - **MedShare:** an MSc capstone platform for inter-pharmacy drug redistribution in Lagos
 - **Global B2B Sales Report:** a 9-table Power BI star schema with what-if analysis
 - **HR Attrition Dashboard:** corrected an attrition rate from about 50% to the true 33.4%
@@ -57,8 +57,6 @@ Hosted on **Netlify**, deployed automatically from this repository on every push
 
 - **Email:** [ample.oluwaferanmi26@gmail.com](mailto:ample.oluwaferanmi26@gmail.com)
 - **LinkedIn:** [linkedin.com/in/oluwaferanmi-amole](https://www.linkedin.com/in/oluwaferanmi-amole/)
-- **GitHub:** [github.com/a-feranmi](https://github.com/a-feranmi)
-- **WhatsApp / call:** [+234 814 127 0590](https://wa.me/2348141270590)
 
 Open to remote, hybrid and relocation roles, with 2 weeks' notice.
 
