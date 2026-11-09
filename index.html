@@ -945,6 +945,24 @@ details.mdet b{color:var(--ink)}
 @media (max-width:960px){.cvband .wrap{grid-template-columns:1fr}}
 .cvband h2{color:var(--hero-ink);margin:12px 0 14px}.cvband .eyebrow{color:var(--amber-hi)}.cvband .lede{color:var(--hero-muted)}
 
+
+/* compact blueprint/build section */
+#ba{max-width:1040px;margin-inline:auto}
+#ba .ba-tabs{gap:8px;margin-bottom:12px}
+#ba .bat{padding:12px 14px;gap:4px}
+#ba .bat b{font-size:.95rem}
+#ba .bat .mt2{font-size:1.1rem;margin-top:2px}
+#ba .ba-story{gap:12px;margin-top:12px}
+#ba .bs{padding:16px 18px;gap:10px;border-radius:16px}
+#ba .bs li,#ba .bs ul.fx li{font-size:.86rem;gap:8px}
+#ba .bs ul.fx{gap:8px}
+#ba .bs ul.fx li b{width:22px;height:22px;font-size:.72rem}
+#ba .bs .flow{display:grid;gap:6px;counter-reset:st;font-size:.84rem}
+#ba .bs .flow i{display:none}
+#ba .bs .flow span{counter-increment:st;display:grid;grid-template-columns:18px 1fr;gap:8px;padding:7px 9px;line-height:1.45;font-size:.82rem}
+#ba .bs .flow span::before{content:counter(st);font:700 .72rem/1.4 var(--f-mono);color:var(--amber)}
+#ba .bs.res .nums{gap:12px 18px}
+#ba .bs.res .nums div{font-size:1.25rem}
 /* projects page screenshots */
 .pthumb{aspect-ratio:auto;cursor:zoom-in;transform-style:preserve-3d;background:var(--surface)}
 .bbar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:var(--sunk);border-bottom:1px solid var(--line)}
